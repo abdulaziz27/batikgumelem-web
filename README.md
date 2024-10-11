@@ -2,14 +2,14 @@
 
 Selamat datang di proyek Batik Gumelem E-commerce! Proyek ini adalah platform e-commerce untuk produk batik Gumelem.
 
-## Persyaratan Sistem
+## System Requirements
 
 - PHP 8.1+
 - Composer
 - Node.js dan NPM
 - MySQL
 
-## Instalasi dan Pengaturan Lokal
+## Intallation and Configuration
 
 1. Clone repositori ini:
    ```
@@ -52,24 +52,32 @@ Selamat datang di proyek Batik Gumelem E-commerce! Proyek ini adalah platform e-
    ```
    php artisan db:seed
    ```
+   setelah running seeder bisa login dengan credential admin/user berikut:
+   role (user)
+   email: user@gmail.com
+   password: password
 
-10. Compile asset:
+   role (admin)
+   email: admin@gmail.com
+   password: password
+
+11. Compile asset:
     ```
     npm run dev
     ```
 
-11. Jalankan server lokal:
+12. Jalankan server lokal:
     ```
     php artisan serve
     ```
 
 Buka `http://localhost:8000` di browser Anda untuk melihat aplikasi.
 
-## Tutorial Youtube: Deployment Ke Hosting pakai SSH
+## Tutorial Youtube: Deployment Ke Hosting with SSH
     - https://youtu.be/IjM0weeuZ4Q?si=MwyK8Z_Z3_Rk4Y-e
     - Note: Dont forget to build npm otherwise Tailwind will not run correctly, 'npm run build' :)
 
-## Midtrans (Testing) Key
+## Midtrans (Testing) Key 
     MIDTRANS_SERVER_KEY=SB-Mid-server-Z3-Zp_tYja3x2e6t4BYPq_gw
     MIDTRANS_CLIENT_KEY=MSB-Mid-client-yTb4hQknvTM4U0qb
     MIDTRANS_IS_PRODUCTION=false
