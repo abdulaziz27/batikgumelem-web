@@ -1,0 +1,34 @@
+created:
+    - database/factories/UserFactory.php
+    - database/factories/ProductFactory.php
+    - database/factories/CategoryFactory.php
+    - database/factories/CartFactory.php
+    - database/factories/OrderFactory.php
+    - database/factories/PaymentFactory.php
+    - database/factories/TrackingDetailFactory.php
+    - database/factories/CouponFactory.php
+    - database/migrations/2024_08_12_223019_create_users_table.php
+    - database/migrations/2024_08_12_223020_create_products_table.php
+    - database/migrations/2024_08_12_223021_create_categories_table.php
+    - database/migrations/2024_08_12_223022_create_carts_table.php
+    - database/migrations/2024_08_12_223023_create_orders_table.php
+    - database/migrations/2024_08_12_223024_create_payments_table.php
+    - database/migrations/2024_08_12_223025_create_tracking_details_table.php
+    - database/migrations/2024_08_12_223026_create_coupons_table.php
+    - app/Models/User.php
+    - app/Models/Product.php
+    - app/Models/Category.php
+    - app/Models/Cart.php
+    - app/Models/Order.php
+    - app/Models/Payment.php
+    - app/Models/TrackingDetail.php
+    - app/Models/Coupon.php
+models:
+    User: { relationships: { hasMany: 'Order, Payment, Cart' } }
+    Product: { id: increments, name: string, price: integer, stock: integer, description: string, thumbnail: string, category_id: 'integer:foreign', timestamps: timestamps, relationships: { belongsTo: Category, hasMany: Cart } }
+    Category: { id: increments, name: string, slug: string, timestamps: timestamps, relationships: { hasMany: Product } }
+    Cart: { id: increments, user_id: 'integer:foreign', product_id: 'integer:foreign', quantity: integer, timestamps: timestamps, relationships: { belongsTo: 'User, Product', hasMany: Order } }
+    Order: { id: increments, user_id: 'integer:foreign', cart_id: 'integer:foreign', payment_id: 'integer:foreign', total_amount: integer, order_date: string, shipping_id: 'integer:foreign', coupon_id: 'integer:foreign', timestamps: timestamps, relationships: { belongsTo: 'User, Cart, Payment, TrackingDetail:shipping, Coupon' } }
+    Payment: { id: increments, payment_method: 'enum:card,bank_transfer,e-wallet', payment_status: 'enum:pending,completed,failed', order_id: 'integer:foreign', user_id: 'integer:foreign', amount: integer, transaction_id: string, fraud_status: 'enum:pass,fail', timestamps: timestamps, relationships: { belongsTo: 'Order, User' } }
+    TrackingDetail: { id: increments, status: 'enum:pending,shipped,delivered', order_id: 'integer:foreign', tracking_number: string, courier_name: string, timestamps: timestamps, relationships: { belongsTo: Order } }
+    Coupon: { id: increments, code: string, discount: float, expiration_date: date, timestamps: timestamps, relationships: { hasMany: Order } }

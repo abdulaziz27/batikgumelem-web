@@ -1,0 +1,82 @@
+models:
+  User:
+    relationships:
+      hasMany: Order, Payment, Cart
+
+  Product:
+    id: increments
+    name: string
+    price: integer
+    stock: integer
+    description: string
+    thumbnail: string
+    category_id: integer:foreign
+    timestamps: true
+    relationships:
+      belongsTo: Category
+      hasMany: Cart
+
+  Category:
+    id: increments
+    name: string
+    slug: string
+    is_active: boolean default: true
+    timestamps: true
+    relationships:
+      hasMany: Product
+
+  Cart:
+    id: increments
+    user_id: integer:foreign
+    product_id: integer:foreign
+    quantity: integer
+    timestamps: true
+    relationships:
+      belongsTo: User, Product
+      hasMany: Order
+
+  Order:
+    id: increments
+    user_id: integer:foreign
+    cart_id: integer:foreign
+    payment_id: integer:foreign
+    total_amount: integer
+    order_date: string
+    shipping_id: integer:foreign
+    coupon_id: integer:foreign
+    timestamps: true
+    relationships:
+      belongsTo: User, Cart, Payment, TrackingDetail:shipping, Coupon
+
+  Payment:
+    id: increments
+    payment_method: enum:card,bank_transfer,e-wallet
+    payment_status: enum:pending,completed,failed
+    order_id: integer:foreign
+    user_id: integer:foreign
+    amount: integer
+    transaction_id: string
+    fraud_status: enum:pass,fail
+    timestamps: true
+    relationships:
+      belongsTo: Order, User
+
+  TrackingDetail:
+    id: increments
+    status: enum:pending,shipped,delivered
+    order_id: integer:foreign
+    tracking_number: string
+    courier_name: string
+    timestamps: true
+    relationships:
+      belongsTo: Order
+
+  Coupon:
+    id: increments
+    code: string
+    discount: float
+    is_active: boolean default: true
+    expiration_date: date
+    timestamps: true
+    relationships:
+      hasMany: Order
