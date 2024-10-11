@@ -48,7 +48,7 @@ Selamat datang di proyek Batik Gumelem E-commerce! Proyek ini adalah platform e-
    php artisan migrate
    ```
 
-9. (Opsional) Jalankan seeder jika ada:
+9. Jalankan seeder jika ada:
    ```
    php artisan db:seed
    ```
@@ -65,7 +65,11 @@ Selamat datang di proyek Batik Gumelem E-commerce! Proyek ini adalah platform e-
 
 Buka `http://localhost:8000` di browser Anda untuk melihat aplikasi.
 
-## Deployment ke Niagahoster via SSH
+## Tutorial Youtube: Deployment Ke Hosting pakai SSH
+    - https://youtu.be/IjM0weeuZ4Q?si=MwyK8Z_Z3_Rk4Y-e
+    - Note: Dont forget to build npm otherwise Tailwind will not run correctly, 'npm run build' :)
+
+## (Opsional) Deployment ke Niagahoster via SSH
 
 1. Login ke server Niagahoster menggunakan SSH:
    ```
