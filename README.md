@@ -1,66 +1,149 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Batik Gumelem E-commerce Website
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Selamat datang di proyek Batik Gumelem E-commerce! Proyek ini adalah platform e-commerce untuk produk batik Gumelem.
 
-## About Laravel
+## Persyaratan Sistem
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP 8.1+
+- Composer
+- Node.js dan NPM
+- MySQL
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Instalasi dan Pengaturan Lokal
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. Clone repositori ini:
+   ```
+   git clone https://github.com/abdulaziz27/batikgumelem-web.git
+   ```
 
-## Learning Laravel
+2. Pindah ke direktori proyek:
+   ```
+   cd batikgumelem-web
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+3. Instal dependensi PHP:
+   ```
+   composer install
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+4. Instal dependensi JavaScript:
+   ```
+   npm install
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+5. Salin file .env.example menjadi .env:
+   ```
+   cp .env.example .env
+   ```
 
-## Laravel Sponsors
+6. Generate application key:
+   ```
+   php artisan key:generate
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+7. Konfigurasi database di file .env
 
-### Premium Partners
+8. Jalankan migrasi database:
+   ```
+   php artisan migrate
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+9. (Opsional) Jalankan seeder jika ada:
+   ```
+   php artisan db:seed
+   ```
 
-## Contributing
+10. Compile asset:
+    ```
+    npm run dev
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+11. Jalankan server lokal:
+    ```
+    php artisan serve
+    ```
 
-## Code of Conduct
+Buka `http://localhost:8000` di browser Anda untuk melihat aplikasi.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Deployment ke Niagahoster via SSH
 
-## Security Vulnerabilities
+1. Login ke server Niagahoster menggunakan SSH:
+   ```
+   ssh username@your_server_ip
+   ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+2. Navigasi ke direktori public_html atau direktori yang ditentukan:
+   ```
+   cd public_html
+   ```
 
-## License
+3. Clone repositori (jika belum ada):
+   ```
+   git clone https://github.com/abdulaziz27/batikgumelem-web.git
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+   Atau pull perubahan terbaru jika sudah ada:
+   ```
+   cd batikgumelem-web
+   git pull origin main
+   ```
+
+4. Instal dependensi:
+   ```
+   composer install --no-dev
+   npm install
+   ```
+
+5. Salin dan konfigurasi .env:
+   ```
+   cp .env.example .env
+   nano .env
+   ```
+   Sesuaikan konfigurasi database dan pengaturan lainnya.
+
+6. Generate application key:
+   ```
+   php artisan key:generate
+   ```
+
+7. Jalankan migrasi:
+   ```
+   php artisan migrate
+   ```
+
+8. Optimize aplikasi:
+   ```
+   php artisan optimize
+   ```
+
+9. Compile asset:
+   ```
+   npm run build
+   ```
+
+10. Atur permission:
+    ```
+    chmod -R 755 storage bootstrap/cache
+    ```
+
+11. Konfigurasi web server (Apache/Nginx) untuk mengarahkan ke direktori public.
+
+## Pemeliharaan
+
+- Untuk update aplikasi:
+  ```
+  git pull origin main
+  composer install --no-dev
+  php artisan migrate
+  npm install
+  npm run build
+  php artisan optimize
+  ```
+
+## Kontribusi
+
+Silakan buat issue atau pull request untuk kontribusi.
+
+## Lisensi
+
+[MIT License](LICENSE)
