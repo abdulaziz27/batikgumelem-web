@@ -52,7 +52,8 @@ Selamat datang di proyek Batik Gumelem E-commerce! Proyek ini adalah platform e-
    ```
    php artisan db:seed
    ```
-        setelah running seeder bisa login dengan credential admin/user berikut:
+   setelah running seeder bisa login dengan credential admin/user berikut:
+
         role (user)
         email: user@gmail.com
         password: password
