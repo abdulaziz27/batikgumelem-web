@@ -50,9 +50,9 @@ class CategoryResource extends Resource
             //     ->required()
             //     ->label('Image URL'),
 
-            Forms\Components\TextInput::make('products_count')
-                ->label('Products Count')
-                ->disabled(),
+            // Forms\Components\TextInput::make('products_count')
+            //     ->label('Products Count')
+            //     ->disabled(),
         ]);
     }
 
@@ -64,12 +64,12 @@ class CategoryResource extends Resource
                     ->label('Category Name'),
                 Tables\Columns\TextColumn::make('slug')
                     ->label('Slug'),
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('Image')
-                    ->circular()
-                    ->disk('public'),
-                Tables\Columns\TextColumn::make('products_count')
-                    ->label('Products Count'),
+                // Tables\Columns\ImageColumn::make('image')
+                //     ->label('Image')
+                //     ->circular()
+                //     ->disk('public'),
+                // Tables\Columns\TextColumn::make('products_count')
+                //     ->label('Products Count'),
             ])
             ->filters([
                 //

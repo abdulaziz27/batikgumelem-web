@@ -17,8 +17,8 @@ class ProductsTableSeeder extends Seeder
         // Data produk dan galeri yang akan dimasukkan secara manual
         $products = [
             [
-                'name' => 'Product 1',
-                'slug' => 'product-1',
+                'name' => 'Batik Tulis Sekar Jagad',
+                'slug' => 'batik-tulis-sekar-jagad',
                 'price' => 100000,
                 'description' => 'This is the description for Product 1',
                 'category_id' => 1,
