@@ -1,0 +1,16 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/n1569240/public_html/
+    # Menyalin semua file dari direktori kerja ke DEPLOYPATH
+    - /bin/cp -R * $DEPLOYPATH
+    # Menyalin file .env ke DEPLOYPATH (pastikan file ini ada dan terkonfigurasi dengan baik)
+    - /bin/cp -R .env $DEPLOYPATH
+    # Menyalin isi direktori storage ke direktori storage di DEPLOYPATH
+    - /bin/cp -R storage/* $DEPLOYPATH/storage/
+    # Mengatur cache konfigurasi
+    - cd $DEPLOYPATH && php artisan config:cache
+    # Mengatur cache route
+    - cd $DEPLOYPATH && php artisan route:cache
+    # Menjalankan migrasi database jika perlu (tambahkan ini jika anda berada di tahap produksi)
+    - cd $DEPLOYPATH && php artisan migrate --force
