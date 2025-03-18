@@ -398,101 +398,103 @@
     <!-- END: REVIEWS SECTION -->
 
     <!-- START: PRODUCTS RECOMMENDATION -->
-<section class="bg-gray-100 px-4 py-16">
-  <div class="container mx-auto">
-    <div class="flex flex-start mb-4">
-      <h3 class="text-2xl capitalize font-semibold">
-        {{ __('messages.recommendations') }}
-      </h3>
-    </div>
-    <div class="flex overflow-x-auto mb-4 -mx-3">
-      @foreach ($recommendations as $recommendation)
-        <div class="px-3 flex-none" style="width: 320px">
-          <div class="card group">
-            <div
-              class="rounded-xl overflow-hidden card-shadow relative"
-              style="width: 287px; height: 386px"
-            >
-              <div
-                class="absolute opacity-0 group-hover:opacity-100 transition duration-200 flex items-center justify-center w-full h-full bg-black bg-opacity-35 z-10"
-              >
-                <div class="flex space-x-2">
-                  <!-- View Details Icon -->
-                  <a href="{{ route('details', $recommendation->slug) }}" class="bg-white text-black rounded-full w-12 h-12 flex items-center justify-center hover:bg-gray-100 transition duration-200 z-20">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
-                    </svg>
-                  </a>
-
-                  <!-- Wishlist Button -->
-                  @auth
-                  <form class="wishlist-form" action="{{ route('wishlist.toggle', $recommendation->id) }}" method="POST">
-                      @csrf
-                      <button type="button"
-                              onclick="submitWishlistForm(this)"
-                              class="wishlist-button bg-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-gray-100 transition duration-200 z-20 {{ Auth::user()->hasInWishlist($recommendation->id) ? 'text-red-600' : 'text-black' }}">
-                          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                          </svg>
-                      </button>
-                  </form>
-                  @else
-                  <a href="{{ route('login') }}" class="bg-white text-black hover:text-red-600 rounded-full w-12 h-12 flex items-center justify-center hover:bg-gray-100 transition duration-200 z-20">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                  </a>
-                  @endauth
-                </div>
-              </div>
-              @php
-                  $imageUrl = $recommendation->galleries->isNotEmpty()
-                      ? $recommendation->galleries->first()->url
-                      : null;
-
-                  $imageUrl = $imageUrl
-                      ? (str_contains($imageUrl, 'storage') ? asset($imageUrl) : asset('storage/' . ltrim($imageUrl, '/')))
-                      : 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
-              @endphp
-              <img
-                  src="{{ $imageUrl }}"
-                  alt="{{ $recommendation->name }}"
-                  class="w-full h-full object-cover object-center"
-              />
+    <section class="bg-gray-100 px-4 py-16">
+        <div class="container mx-auto">
+            <div class="flex flex-start mb-4">
+                <h3 class="text-2xl capitalize font-semibold">
+                    {{ __('messages.recommendations') }}
+                </h3>
             </div>
-            <div class="mt-4">
-              <h5 class="text-lg font-semibold">{{ $recommendation->name }}</h5>
-              <div class="flex justify-between items-center mt-2">
-                <span>IDR {{ number_format($recommendation->price) }}</span>
+            <div class="flex overflow-x-auto mb-4 -mx-3">
+                @foreach ($recommendations as $recommendation)
+                    <div class="px-3 flex-none" style="width: 320px">
+                        <div class="card group relative">
+                            <div class="rounded-xl overflow-hidden card-shadow relative"
+                                style="width: 287px; height: 386px">
+                                <div
+                                    class="absolute opacity-0 group-hover:opacity-100 transition duration-200 flex items-center justify-center w-full h-full bg-black bg-opacity-35 z-10">
+                                    <div class="flex space-x-2">
+                                        <!-- View Details Icon -->
+                                        <a href="{{ route('details', $recommendation->slug) }}"
+                                            class="bg-white text-black rounded-full w-12 h-12 flex items-center justify-center hover:bg-gray-100 transition duration-200 z-20">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                                </path>
+                                            </svg>
+                                        </a>
 
-                <!-- Stock & Rating -->
-                <div class="flex items-center">
-                    @if($recommendation->stock > 0)
-                        <span class="text-xs text-green-600 mr-2">In Stock</span>
-                    @else
-                        <span class="text-xs text-red-600 mr-2">Out of Stock</span>
-                    @endif
+                                        <!-- Wishlist Button -->
+                                        @auth
+                                            <form class="wishlist-form"
+                                                action="{{ route('wishlist.toggle', $recommendation->id) }}" method="POST">
+                                                @csrf
+                                                <button type="button" onclick="submitWishlistForm(this)"
+                                                    class="wishlist-button bg-white rounded-full w-12 h-12 flex items-center justify-center hover:bg-gray-100 transition duration-200 z-20 {{ Auth::user()->hasInWishlist($recommendation->id) ? 'text-red-600' : 'text-black' }}">
+                                                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"
+                                                        xmlns="http://www.w3.org/2000/svg">
+                                                        <path
+                                                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        @else
+                                            <a href="{{ route('login') }}"
+                                                class="bg-white text-black hover:text-red-600 rounded-full w-12 h-12 flex items-center justify-center hover:bg-gray-100 transition duration-200 z-20">
+                                                <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                                </svg>
+                                            </a>
+                                        @endauth
+                                    </div>
+                                </div>
+                                @php
+                                    $imageUrl = $recommendation->galleries->isNotEmpty()
+                                        ? $recommendation->galleries->first()->url
+                                        : null;
 
-                    <div class="flex items-center">
-                        <span class="text-yellow-400 text-sm">★</span>
-                        <span class="text-xs text-gray-600 ml-1">{{ number_format($recommendation->average_rating, 1) }}</span>
+                                    $imageUrl = $imageUrl
+                                        ? (str_contains($imageUrl, 'storage')
+                                            ? asset($imageUrl)
+                                            : asset('storage/' . ltrim($imageUrl, '/')))
+                                        : 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==';
+                                @endphp
+                                <img src="{{ $imageUrl }}" alt="{{ $recommendation->name }}"
+                                    class="w-full h-full object-cover object-center" />
+                            </div>
+                            <div class="mt-4">
+                                <h5 class="text-lg font-semibold">{{ $recommendation->name }}</h5>
+                                <div class="flex justify-between items-center mt-2">
+                                    <span>IDR {{ number_format($recommendation->price) }}</span>
+
+                                    <!-- Stock & Rating -->
+                                    <div class="flex items-center">
+                                        @if ($recommendation->stock > 0)
+                                            <span class="text-xs text-green-600 mr-2">In Stock</span>
+                                        @else
+                                            <span class="text-xs text-red-600 mr-2">Out of Stock</span>
+                                        @endif
+
+                                        <div class="flex items-center">
+                                            <span class="text-yellow-400 text-sm">★</span>
+                                            <span
+                                                class="text-xs text-gray-600 ml-1">{{ number_format($recommendation->average_rating, 1) }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-              </div>
+                @endforeach
             </div>
-
-            <!-- Clickable area for the entire card -->
-            <a href="{{ route('details', $recommendation->slug) }}" class="absolute inset-0 z-0">
-              <!-- Empty space for clickable area -->
-            </a>
-          </div>
         </div>
-      @endforeach
-    </div>
-  </div>
-</section>
-<!-- END: PRODUCTS RECOMMENDATION -->
+    </section>
+    <!-- END: PRODUCTS RECOMMENDATION -->
 @endsection
 
 @section('script')
@@ -534,30 +536,39 @@
 @endsection
 
 @push('addon-script')
-<script>
-function toggleWishlist(button) {
-    const productId = button.getAttribute('data-product-id');
+    <script>
+        function toggleWishlist(button) {
+            const productId = button.getAttribute('data-product-id');
 
-    fetch(`/wishlist/toggle/${productId}`, {
-        method: 'POST',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            fetch(`/wishlist/toggle/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.in_wishlist) {
+                        button.classList.add('text-red-600');
+                        button.classList.remove('text-gray-600');
+                    } else {
+                        button.classList.remove('text-red-600');
+                        button.classList.add('text-gray-600');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.in_wishlist) {
-            button.classList.add('text-red-600');
-            button.classList.remove('text-gray-600');
-        } else {
-            button.classList.remove('text-red-600');
-            button.classList.add('text-gray-600');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-}
-</script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hentikan propagasi event pada tombol-tombol overlay di rekomendasi
+            document.querySelectorAll('.card .z-20').forEach(element => {
+                element.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            });
+        });
+    </script>
 @endpush
