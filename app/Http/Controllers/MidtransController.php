@@ -21,7 +21,8 @@ class MidtransController extends Controller
             return response()->json(['message' => 'Invalid signature'], 403);
         }
 
-        $transaction = Transaction::findOrFail($notification->order_id);
+        // Find transaction by the Midtrans order ID
+        $transaction = Transaction::where('midtrans_order_id', $notification->order_id)->firstOrFail();
         $transaction->status = $this->mapPaymentStatus($notification->transaction_status);
         $transaction->save();
 

@@ -84,6 +84,95 @@
                 </div>
             </div>
         </article>
+
+        <!-- START: RELATED ARTICLES -->
+        <section class="mt-12 bg-gray-50 py-12 px-4">
+            <div class="container mx-auto max-w-6xl">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-brown-800 mb-4">Explore More Stories</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">
+                        Dive deeper into our collection of articles that might spark your interest and expand your knowledge about Batik Gumelem.
+                    </p>
+                </div>
+
+                @php
+                    // Fetch related articles from the same author or similar category
+                    $relatedBlogs = \App\Models\Blog::where('is_published', true)
+                        ->where('id', '!=', $blog->id)
+                        ->where(function($query) use ($blog) {
+                            $query->where('user_id', $blog->user_id)
+                                  ->orWhere('id', '!=', $blog->id);
+                        })
+                        ->latest('published_at')
+                        ->limit(3)
+                        ->get();
+                @endphp
+
+                @if($relatedBlogs->count() > 0)
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        @foreach($relatedBlogs as $relatedBlog)
+                            <div class="group relative overflow-hidden rounded-xl shadow-lg transition-all duration-300 hover:shadow-2xl">
+                                <div class="relative overflow-hidden">
+                                    @if($relatedBlog->featured_image)
+                                        <img
+                                            src="{{ asset('storage/' . $relatedBlog->featured_image) }}"
+                                            alt="{{ $relatedBlog->title }}"
+                                            class="w-full h-56 object-cover transform transition-transform duration-300 group-hover:scale-110"
+                                        >
+                                    @else
+                                        <div class="w-full h-56 bg-brown-100 flex items-center justify-center">
+                                            <svg class="w-16 h-16 text-brown-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                            </svg>
+                                        </div>
+                                    @endif
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+                                        <p class="text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            {{ Str::limit(strip_tags($relatedBlog->content), 100) }}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="p-5 bg-white">
+                                    <div class="flex items-center text-sm text-gray-500 mb-2">
+                                        <svg class="w-4 h-4 mr-2 text-brown-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                                        </svg>
+                                        <span class="mr-4">{{ $relatedBlog->user->name }}</span>
+                                        <svg class="w-4 h-4 mr-2 text-brown-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                        <span>{{ $relatedBlog->published_at->format('M d, Y') }}</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold text-brown-800 mb-3 line-clamp-2">
+                                        {{ $relatedBlog->title }}
+                                    </h3>
+                                    <div class="flex items-center justify-between">
+                                        <a href="{{ route('blogs.show', $relatedBlog->slug) }}"
+                                           class="text-brown-500 hover:text-brown-700 font-semibold inline-flex items-center group">
+                                            Read Article
+                                            <svg class="w-4 h-4 ml-2 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                                <a href="{{ route('blogs.show', $relatedBlog->slug) }}" class="absolute inset-0 z-10"></a>
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="text-center bg-white p-10 rounded-xl shadow-md">
+                        <svg class="w-16 h-16 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
+                        </svg>
+                        <p class="text-gray-600 text-xl">No related articles found at the moment.</p>
+                        <p class="text-gray-500 mt-2">Check back later or explore our other blog posts.</p>
+                    </div>
+                @endif
+            </div>
+        </section>
+        <!-- END: RELATED ARTICLES -->
     </div>
 </div>
 @endsection

@@ -12,6 +12,23 @@
       </section>
     <!-- END: BREADCRUMB -->
 
+    <!-- Display Messages -->
+    @if(session('success'))
+        <div class="container mx-auto px-4 py-2">
+            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ session('success') }}</span>
+            </div>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="container mx-auto px-4 py-2">
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                <span class="block sm:inline">{{ session('error') }}</span>
+            </div>
+        </div>
+    @endif
+
     <!-- START: SHOPPING CART -->
     <section class="md:py-16">
       <div class="container mx-auto px-4">
@@ -51,7 +68,7 @@
             <!-- START: ROW 1 -->
             @forelse ($carts as $item)
                <div
-                  class="flex flex-start flex-wrap items-center mb-4 -mx-4"
+                  class="flex flex-start flex-wrap items-center mb-4 -mx-4 {{ isset($item->stock_warning) ? 'bg-yellow-50 rounded-lg' : '' }}"
                   data-row="1"
                 >
                   <div class="px-4 flex-none">
@@ -70,7 +87,7 @@
                       <img
                         src="{{ $imageUrl }}"
                         alt="Product Image"
-                        class="object-cover rounded-xl w-full h-full"
+                        class="object-cover rounded-xl w-full h-full {{ $item->product->stock <= 0 ? 'opacity-50' : '' }}"
                       />
                     </div>
                   </div>
@@ -85,6 +102,23 @@
                       >
                         IDR {{ number_format($item->product->price) }}
                       </h6>
+
+                      <!-- Stock Warning -->
+                      @if(isset($item->stock_warning))
+                        <div class="text-yellow-600 text-sm mt-1">
+                            <svg class="inline-block w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                            </svg>
+                            {{ $item->stock_warning }}
+                        </div>
+                      @endif
+
+                      <!-- Stock Status -->
+                      @if($item->product->stock <= 0)
+                        <div class="text-red-600 text-sm mt-1">Out of Stock</div>
+                      @elseif($item->product->stock < 5)
+                        <div class="text-yellow-600 text-sm mt-1">Only {{ $item->product->stock }} left</div>
+                      @endif
                     </div>
                   </div>
                   <div
@@ -219,24 +253,6 @@
                   />
                 </div>
 
-                {{-- <div class="flex flex-col mb-4">
-                    <label for="complete-name" class="text-sm mb-2">Choose Courier</label>
-                    <div class="flex -mx-2 flex-wrap">
-                        <div class="px-2 w-6/12 h-24 mb-4">
-                            <label class="border border-gray-200 flex items-center justify-center rounded-xl bg-white w-full h-full cursor-pointer courier-option">
-                                <input type="radio" name="courier" value="jnt" class="hidden" required>
-                                <img src="/frontend/images/content/logo-jnt.svg" alt="Logo JNT" class="object-contain max-h-full">
-                            </label>
-                        </div>
-                        <div class="px-2 w-6/12 h-24 mb-4">
-                            <label class="border border-gray-200 flex items-center justify-center rounded-xl bg-white w-full h-full cursor-pointer courier-option">
-                                <input type="radio" name="courier" value="sicepat" class="hidden" required>
-                                <img src="/frontend/images/content/sicepat.png" alt="Logo Sicepat" class="object-contain max-h-full">
-                            </label>
-                        </div>
-                    </div>
-                </div> --}}
-
                 <div class="flex flex-col mb-4">
                     <label for="complete-name" class="text-sm mb-2">Choose Payment</label>
                     <div class="flex -mx-2 flex-wrap">
@@ -257,13 +273,28 @@
                 @error('payment')
                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                 @enderror
+
+                <!-- Check if any item is out of stock -->
+                @php
+                    $anyOutOfStock = $carts->contains(function($item) {
+                        return $item->product->stock <= 0;
+                    });
+                @endphp
+
                 <div class="text-center">
                     <button
                         type="submit"
-                        class="bg-brown-400 text-white hover:bg-black focus:outline-none w-full py-3 rounded-full text-lg transition-all duration-200 px-6"
+                        class="bg-brown-400 text-white hover:bg-black focus:outline-none w-full py-3 rounded-full text-lg transition-all duration-200 px-6 {{ $anyOutOfStock || $carts->isEmpty() ? 'opacity-50 cursor-not-allowed' : '' }}"
+                        {{ $anyOutOfStock || $carts->isEmpty() ? 'disabled' : '' }}
                     >
                         Checkout Now
                     </button>
+
+                    @if($anyOutOfStock)
+                        <p class="text-red-500 text-sm mt-2">
+                            Please remove out of stock items from your cart before proceeding.
+                        </p>
+                    @endif
                 </div>
               </form>
             </div>
@@ -279,7 +310,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM fully loaded and parsed');
 
-    const courierOptions = document.querySelectorAll('.courier-option');
     const paymentOptions = document.querySelectorAll('.payment-option');
 
     function handleSelection(options) {
@@ -302,10 +332,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    handleSelection(courierOptions);
     handleSelection(paymentOptions);
 
-    console.log('Event listeners added to', courierOptions.length, 'courier options and', paymentOptions.length, 'payment options');
+    console.log('Event listeners added to', paymentOptions.length, 'payment options');
 });
 </script>
 @endpush

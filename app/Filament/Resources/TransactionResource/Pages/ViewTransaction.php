@@ -45,6 +45,9 @@ class ViewTransaction extends ViewRecord
                         RepeatableEntry::make('transactionItems')
                             ->schema([
                                 TextEntry::make('product.name')->label('Product'),
+                                TextEntry::make('size_name')
+                                    ->label('Size')
+                                    ->default('-'),
                                 TextEntry::make('quantity'),
                                 TextEntry::make('price')->money('IDR'),
                                 TextEntry::make('total')
@@ -53,7 +56,7 @@ class ViewTransaction extends ViewRecord
                                         return $record->quantity * $record->price;
                                     }),
                             ])
-                            ->columns(4)
+                            ->columns(5)
                     ])
             ]);
     }

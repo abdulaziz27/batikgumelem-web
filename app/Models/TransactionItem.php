@@ -10,14 +10,31 @@ class TransactionItem extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['transaction_id', 'product_id', 'quantity', 'price'];
+    protected $fillable = [
+        'transaction_id',
+        'product_id',
+        'product_size_id',
+        'size_name',
+        'quantity',
+        'price'
+    ];
 
-    public function transaction() {
+    public function transaction()
+    {
         return $this->belongsTo(Transaction::class);
     }
 
-    public function product() {
+    public function product()
+    {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * Get the product size that belongs to the transaction item.
+     */
+    public function size()
+    {
+        return $this->belongsTo(ProductSize::class, 'product_size_id');
     }
 
     public static function boot()

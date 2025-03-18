@@ -1,3 +1,4 @@
+<!-- Updated navbar.blade.php -->
 <!-- START: HEADER -->
 <header class="{{ \Route::current()->getName() == 'index' ? 'absolute' : '' }} w-full z-50 px-4">
       <div class="container mx-auto py-5">
@@ -15,38 +16,42 @@
             >
               <li class="mx-3 py-6 md:py-0">
                 <a href="{{ route('index') }}" class="text-black {{ \Route::current()->getName() == 'index' ? 'md:text-white' : 'md:text-black' }} hover:underline"
-                  >Beranda</a
+                  >{{ __('messages.home') }}</a
                 >
               </li>
               <li class="mx-3 py-6 md:py-0">
                 <a href="{{ route('products') }}" class="text-black {{ \Route::current()->getName() == 'index' ? 'md:text-white' : 'md:text-black' }} hover:underline"
-                  >Produk</a
+                  >{{ __('messages.products') }}</a
                 >
               </li>
               <li class="mx-3 py-6 md:py-0">
                 <a href="{{ route('history') }}" class="text-black {{ \Route::current()->getName() == 'index' ? 'md:text-white' : 'md:text-black' }} hover:underline"
-                  >Sejarah</a
+                  >{{ __('messages.history') }}</a
                 >
               </li>
               <li class="mx-3 py-6 md:py-0">
                 <a href="{{ route('blogs.index') }}" class="text-black {{ \Route::current()->getName() == 'index' ? 'md:text-white' : 'md:text-black' }} hover:underline"
-                  >Blog</a
+                  >{{ __('messages.blog') }}</a
                 >
               </li>
               @auth
                   <li class="mx-3 py-6 md:py-0">
                     <a href="{{ route('dashboard') }}" class="text-black {{ \Route::current()->getName() == 'index' ? 'md:text-white' : 'md:text-black' }} hover:underline"
-                      >Dashboard</a
+                      >{{ __('messages.dashboard') }}</a
                     >
                   </li>
               @endauth
               @guest
                   <li class="mx-3 py-6 md:py-0">
                     <a href="{{ route('login') }}" class="text-black {{ \Route::current()->getName() == 'index' ? 'md:text-white' : 'md:text-black' }} hover:underline"
-                      >Login</a
+                      >{{ __('messages.login') }}</a
                     >
                   </li>
               @endguest
+              <!-- Add language switcher here -->
+              <li class="mx-3 py-6 md:py-0">
+                <x-language-switcher />
+              </li>
             </ul>
           </div>
           <div class="w-auto">
@@ -74,6 +79,30 @@
                   </svg>
                 </button>
               </li>
+              @auth
+              <li class="ml-6">
+                <a
+                  class="flex items-center justify-center w-8 h-8 text-black {{ \Route::current()->getName() == 'index' ? 'md:text-white' : 'md:text-black' }}"
+                  href="{{ route('wishlist.index') }}"
+                  title="{{ __('messages.wishlist') }}"
+                >
+                  <svg
+                    class="fill-current"
+                    width="26"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </a>
+              </li>
+              @endauth
               <li class="ml-6">
                 <a
                   id="header-cart"

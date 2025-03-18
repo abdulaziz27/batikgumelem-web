@@ -32,13 +32,15 @@ class BlogResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->reactive()
-                    ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
+                    ->afterStateUpdated(fn($state, callable $set) => $set('slug', Str::slug($state))),
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\RichEditor::make('content')
                     ->required(),
-                Forms\Components\FileUpload::make('featured_image'),
+                Forms\Components\FileUpload::make('featured_image')
+                    ->disk('public')
+                    ->directory('blog-images'),
                 Forms\Components\Toggle::make('is_published')
                     ->required(),
                 Forms\Components\DateTimePicker::make('published_at'),

@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers\GalleriesRelationManager;
+use App\Filament\Resources\ProductResource\RelationManagers\SizesRelationManager;
 use App\Models\Product;
 use App\Models\Category;
 use Filament\Forms;
@@ -28,7 +29,7 @@ class ProductResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->live(onBlur: true)
-                    ->afterStateUpdated(fn (string $state, Forms\Set $set) => $set('slug', Str::slug($state))),
+                    ->afterStateUpdated(fn(string $state, Forms\Set $set) => $set('slug', Str::slug($state))),
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->maxLength(255),
@@ -45,20 +46,41 @@ class ProductResource extends Resource
                     ->required()
                     ->columnSpanFull(),
 
-                // alternative upload product image
-                // Forms\Components\Repeater::make('galleries')
-                //     ->relationship('galleries')
-                //     ->schema([
-                // Forms\Components\FileUpload::make('url')
-                //     ->required()
-                //     ->disk('public')
-                //     ->directory('product-images')
-                //     ->image(),
-                // Forms\Components\Toggle::make('is_featured')
-                //     ->label('Fitur Utama')
-                //     ->default(false),
-                // ])
-                // ->createItemButtonLabel('Tambah Gambar'),
+                // Note: We'll leave the main stock field but make it read-only as stock is now managed per size
+                Forms\Components\TextInput::make('stock')
+                    ->numeric()
+                    ->label('Total Stock (Combined from all sizes)')
+                    ->helperText('This field is now calculated from individual size stocks and will be auto-updated')
+                    ->disabled()
+                    ->dehydrated(false),
+
+                // Product Sizes Section
+                Forms\Components\Section::make('Product Sizes')
+                    ->description('Define available sizes and their inventory levels')
+                    ->schema([
+                        Forms\Components\Repeater::make('sizes')
+                            ->relationship()
+                            ->schema([
+                                Forms\Components\TextInput::make('name')
+                                    ->label('Size Name')
+                                    ->required()
+                                    ->maxLength(50),
+                                Forms\Components\TextInput::make('description')
+                                    ->label('Size Description')
+                                    ->maxLength(255)
+                                    ->placeholder('e.g., Length: 200cm, Width: 110cm'),
+                                Forms\Components\TextInput::make('stock')
+                                    ->label('Stock Available')
+                                    ->required()
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->default(0),
+                            ])
+                            ->columns(3)
+                            ->defaultItems(0)
+                            ->reorderableWithButtons()
+                            ->createItemButtonLabel('Add Size'),
+                    ]),
             ]);
     }
 
@@ -73,12 +95,19 @@ class ProductResource extends Resource
                     ->circular()
                     ->getStateUsing(function (Product $record) {
                         return $record->galleries()
-                                      ->where('is_featured', true)
-                                      ->first()
-                                      ?->url; // null safe operator
+                            ->where('is_featured', true)
+                            ->first()
+                            ?->url; // null safe operator
                     }),
                 Tables\Columns\TextColumn::make('price')
                     ->money('IDR', true)
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('sizes_count')
+                    ->label('Available Sizes')
+                    ->counts('sizes'),
+                Tables\Columns\TextColumn::make('stock')
+                    ->label('Total Stock')
+                    ->getStateUsing(fn(Product $record) => $record->getTotalSizeStockAttribute())
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -108,6 +137,7 @@ class ProductResource extends Resource
     {
         return [
             GalleriesRelationManager::class,
+            SizesRelationManager::class,
         ];
     }
 
@@ -121,4 +151,11 @@ class ProductResource extends Resource
         ];
     }
 
+    // Add a method to save sizes and update total stock
+    protected static function afterSave(Product $record): void
+    {
+        // Update the main product stock based on the sum of all size stocks
+        $totalStock = $record->sizes()->sum('stock');
+        $record->update(['stock' => $totalStock]);
+    }
 }

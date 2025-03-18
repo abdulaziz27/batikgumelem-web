@@ -20,6 +20,7 @@ class Cart extends Model
     protected $fillable = [
         'user_id',
         'product_id',
+        'product_size_id',
         'quantity',
     ];
 
@@ -31,6 +32,7 @@ class Cart extends Model
     protected $casts = [
         'user_id' => 'integer',
         'product_id' => 'integer',
+        'product_size_id' => 'integer',
     ];
 
     public function user(): BelongsTo
@@ -43,8 +45,11 @@ class Cart extends Model
         return $this->belongsTo(Product::class);
     }
 
-    // public function orders(): HasMany
-    // {
-    //     return $this->hasMany(Order::class);
-    // }
+    /**
+     * Get the product size that belongs to the cart item.
+     */
+    public function size(): BelongsTo
+    {
+        return $this->belongsTo(ProductSize::class, 'product_size_id');
+    }
 }

@@ -12,10 +12,12 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             CategoriesTableSeeder::class,
             ProductsTableSeeder::class,
-            CartsTableSeeder::class,
             BlogsTableSeeder::class,
+            CartsTableSeeder::class,
             TransactionsTableSeeder::class,
             TransactionItemsTableSeeder::class,
+            ReviewsTableSeeder::class,
+            WishlistsTableSeeder::class,
         ]);
     }
 }

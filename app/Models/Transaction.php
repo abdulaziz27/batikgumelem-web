@@ -12,6 +12,7 @@ class Transaction extends Model
 
     protected $fillable = [
         'user_id',
+        'midtrans_order_id',
         'name',
         'email',
         'address',
@@ -23,6 +24,10 @@ class Transaction extends Model
         'status',
     ];
 
+    protected $casts = [
+        'midtrans_order_id' => 'string',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -32,5 +37,4 @@ class Transaction extends Model
     {
         return $this->hasMany(TransactionItem::class);
     }
-
 }

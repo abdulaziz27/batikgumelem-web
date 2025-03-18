@@ -11,7 +11,7 @@
         "php": "^8.2",
         "barryvdh/laravel-dompdf": "^3.0",
         "bezhansalleh/filament-shield": "*",
-        "filament/filament": "^3.2",
+        "filament/filament": "*",
         "laravel/framework": "^11.9",
         "laravel/pail": "^1.1",
         "laravel/tinker": "^2.9",

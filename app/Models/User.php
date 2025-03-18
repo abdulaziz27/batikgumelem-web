@@ -58,6 +58,30 @@ class User extends Authenticatable implements FilamentUser
         return $this->hasMany(Cart::class, 'user_id');
     }
 
+    /**
+     * Get the user's wishlist items.
+     */
+    public function wishlists(): HasMany
+    {
+        return $this->hasMany(Wishlist::class);
+    }
+
+    /**
+     * Get the reviews by the user.
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Check if a product is in the user's wishlist.
+     */
+    public function hasInWishlist($productId): bool
+    {
+        return $this->wishlists()->where('product_id', $productId)->exists();
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->hasRole(['admin', 'author']);
