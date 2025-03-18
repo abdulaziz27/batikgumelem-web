@@ -8,7 +8,8 @@
                     <a href="{{ url('/') }}" class="flex items-center w-max">
                         <span class="self-center text-2xl font-semibold whitespace-nowrap">Batik Gumelem.</span>
                     </a>
-                    <p class="mt-2 text-sm text-gray-600 max-w-md">FCX5+8C3, Karangpule, Gumelem Kulon, Susukan, Banjarnegara, Jawa Tengah 53475</p>
+                    <p class="mt-2 text-sm text-gray-600 max-w-md">FCX5+8C3, Karangpule, Gumelem Kulon, Susukan,
+                        Banjarnegara, Jawa Tengah 53475</p>
                     <div class="flex justify-between mt-4 w-[80px] md:w-1/4">
                         <!-- Social Media Icons -->
                         <a href="#" class="text-gray-500 hover:text-blue-500 transition duration-300 ease-in-out">
@@ -43,24 +44,31 @@
                         <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">{{ __('messages.company') }}</h2>
                         <ul class="text-gray-600">
                             <li class="mb-4">
-                                <a href="{{ route('history') }}" class="hover:underline">{{ __('messages.history') }}</a>
+                                <a href="{{ route('history') }}"
+                                    class="hover:underline">{{ __('messages.history') }}</a>
                             </li>
                             <li class="mb-4">
-                                <a href="{{ route('products') }}" class="hover:underline">{{ __('messages.products') }}</a>
+                                <a href="{{ route('products') }}"
+                                    class="hover:underline">{{ __('messages.products') }}</a>
                             </li>
                             <li class="mb-4">
-                                <a href="{{ route('promotion') }}" class="hover:underline">{{ __('messages.promotion') }}</a>
+                                <a href="{{ route('promotion') }}"
+                                    class="hover:underline">{{ __('messages.promotion') }}</a>
                             </li>
                         </ul>
                     </div>
                     <div>
-                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">{{ __('messages.information') }}</h2>
+                        <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">{{ __('messages.information') }}
+                        </h2>
                         <ul class="text-gray-600">
                             <li class="mb-4">
-                                <a href="https://wa.me/6285211553430?text=Halo%2C%20saya%20ingin%20beli%20batik%20gumelem" target="_blank" rel="noopener noreferrer" class="hover:underline">{{ __('messages.whatsapp') }}</a>
+                                <a href="https://wa.me/6285211553430?text=Halo%2C%20saya%20ingin%20beli%20batik%20gumelem"
+                                    target="_blank" rel="noopener noreferrer"
+                                    class="hover:underline">{{ __('messages.whatsapp') }}</a>
                             </li>
                             <li class="mb-4">
-                                <a href="{{ route('blogs.index') }}" class="hover:underline">{{ __('messages.blog') }}</a>
+                                <a href="{{ route('blogs.index') }}"
+                                    class="hover:underline">{{ __('messages.blog') }}</a>
                             </li>
                             <li class="mb-4">
                                 <a href="{{ route('faq') }}" class="hover:underline">{{ __('messages.faq') }}</a>
@@ -71,26 +79,33 @@
                         <h2 class="mb-6 text-sm font-semibold text-gray-900 uppercase">{{ __('messages.legal') }}</h2>
                         <ul class="text-gray-600">
                             <li class="mb-4">
-                                <a href="{{ route('termsCondition') }}" class="hover:underline">{{ __('messages.terms_conditions') }}</a>
+                                <a href="{{ route('termsCondition') }}"
+                                    class="hover:underline">{{ __('messages.terms_conditions') }}</a>
                             </li>
                             <li class="mb-4">
-                                <a href="{{ route('privacyPolicy') }}" class="hover:underline">{{ __('messages.privacy_policy') }}</a>
+                                <a href="{{ route('privacyPolicy') }}"
+                                    class="hover:underline">{{ __('messages.privacy_policy') }}</a>
                             </li>
                             <li class="mb-4">
-                                <h3 class="text-sm font-semibold mb-2">{{ __('messages.language') }}</h3>
-                                <div class="flex space-x-3">
-                                    <a href="{{ route('language.switch', 'en') }}" class="flex items-center text-sm {{ App::getLocale() == 'en' ? 'font-semibold text-brown-400' : 'text-gray-700' }}">
-                                        <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                            <path fill="#f0f0f0" d="M0 85.33h512v341.337H0z"/>
-                                            <path fill="#d80027" d="M0 85.33h512v113.775H0z"/>
-                                            <path fill="#0052b4" d="M0 312.884h512v113.775H0z"/>
+                                <h3 class="text-sm font-semibold mb-3">{{ __('messages.language') }}</h3>
+                                <div class="flex space-x-3 items-center">
+                                    <a href="{{ route('language.switch', 'en') }}"
+                                        class="flex items-center text-sm {{ App::getLocale() == 'en' ? 'font-semibold text-brown-400' : 'text-gray-700' }}">
+                                        <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 512 512">
+                                            <path fill="#f0f0f0" d="M0 85.33h512v341.337H0z" />
+                                            <path fill="#d80027" d="M0 85.33h512v113.775H0z" />
+                                            <path fill="#0052b4" d="M0 312.884h512v113.775H0z" />
                                         </svg>
                                         {{ __('messages.english') }}
                                     </a>
-                                    <a href="{{ route('language.switch', 'id') }}" class="flex items-center text-sm {{ App::getLocale() == 'id' ? 'font-semibold text-brown-400' : 'text-gray-700' }}">
-                                        <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                            <path fill="#f0f0f0" d="M0 85.337h512v341.326H0z"/>
-                                            <path fill="#a2001d" d="M0 85.337h512v170.663H0z"/>
+                                    <span class="text-gray-300 mx-1">|</span>
+                                    <a href="{{ route('language.switch', 'id') }}"
+                                        class="flex items-center text-sm {{ App::getLocale() == 'id' ? 'font-semibold text-brown-400' : 'text-gray-700' }}">
+                                        <svg class="w-4 h-4 mr-1" xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="0 0 512 512">
+                                            <path fill="#f0f0f0" d="M0 85.337h512v341.326H0z" />
+                                            <path fill="#a2001d" d="M0 85.337h512v170.663H0z" />
                                         </svg>
                                         {{ __('messages.indonesian') }}
                                     </a>
@@ -102,7 +117,8 @@
             </div>
             <hr class="my-6 border-gray-200 sm:mx-auto" />
             <div class="sm:flex items-center justify-center sm:justify-between">
-                <span class="text-sm text-gray-600">© 2024 <a href="/" class="hover:underline">Batik Gumelem™</a>. {{ __('messages.rights_reserved') }}</span>
+                <span class="text-sm text-gray-600">© 2024 <a href="/" class="hover:underline">Batik Gumelem™</a>.
+                    {{ __('messages.rights_reserved') }}</span>
             </div>
         </div>
     </div>

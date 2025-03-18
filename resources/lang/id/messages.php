@@ -117,7 +117,7 @@ return [
     // Languages
     'language' => 'Bahasa',
     'english' => 'Inggris',
-    'indonesian' => 'Bahasa Indonesia',
+    'indonesian' => 'Indonesia',
 
     // Footer
     'company' => 'Perusahaan',
