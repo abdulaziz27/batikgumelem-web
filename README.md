@@ -4,70 +4,80 @@ Selamat datang di proyek Batik Gumelem E-commerce! Proyek ini adalah platform e-
 
 ## System Requirements
 
-- PHP 8.1+
-- Composer
-- Node.js dan NPM
-- MySQL
+-   PHP 8.1+
+-   Composer
+-   Node.js dan NPM
+-   MySQL
 
 ## Intallation and Configuration
 
-1. Clone repositori ini:
-   ```
-   git clone https://github.com/abdulaziz27/batikgumelem-web.git
-   ```
+1.  Clone repositori ini:
 
-2. Pindah ke direktori proyek:
-   ```
-   cd batikgumelem-web
-   ```
+    ```
+    git clone https://github.com/abdulaziz27/batikgumelem-web.git
+    ```
 
-3. Instal dependensi PHP:
-   ```
-   composer install
-   ```
+2.  Pindah ke direktori proyek:
 
-4. Instal dependensi JavaScript:
-   ```
-   npm install
-   ```
+    ```
+    cd batikgumelem-web
+    ```
 
-5. Salin file .env.example menjadi .env:
-   ```
-   cp .env.example .env
-   ```
+3.  Instal dependensi PHP:
 
-6. Generate application key:
-   ```
-   php artisan key:generate
-   ```
+    ```
+    composer install
+    ```
 
-7. Konfigurasi database di file .env
+4.  Instal dependensi JavaScript:
 
-8. Jalankan migrasi database:
-   ```
-   php artisan migrate
-   ```
+    ```
+    npm install
+    ```
 
-9. Jalankan seeder jika ada:
-   ```
-   php artisan db:seed
-   ```
-   setelah running seeder bisa login dengan credential admin/user berikut:
+5.  Salin file .env.example menjadi .env:
 
-        role (user)
-        email: user@gmail.com
-        password: password
-        
-        role (admin)
-        email: admin@gmail.com
-        password: password
+    ```
+    cp .env.example .env
+    ```
 
-11. Compile asset:
+6.  Generate application key:
+
+    ```
+    php artisan key:generate
+    ```
+
+7.  Konfigurasi database di file .env
+
+8.  Jalankan migrasi database:
+
+    ```
+    php artisan migrate
+    ```
+
+9.  Jalankan seeder jika ada:
+
+    ```
+    php artisan db:seed
+    ```
+
+    setelah running seeder bisa login dengan credential admin/user berikut:
+
+         role (user)
+         email: user@gmail.com
+         password: password
+
+         role (admin)
+         email: admin@gmail.com
+         password: password
+
+10. Compile asset:
+
     ```
     npm run dev
     ```
 
-12. Jalankan server lokal:
+11. Jalankan server lokal:
     ```
     php artisan serve
     ```
@@ -75,73 +85,79 @@ Selamat datang di proyek Batik Gumelem E-commerce! Proyek ini adalah platform e-
 Buka `http://localhost:8000` di browser Anda untuk melihat aplikasi.
 
 ## Tutorial Youtube: Deployment Ke Hosting with SSH
+
     - https://youtu.be/IjM0weeuZ4Q?si=MwyK8Z_Z3_Rk4Y-e
     - Note: Dont forget to build npm otherwise Tailwind will not run correctly, 'npm run build' :)
-
-## Midtrans (Testing) Key 
-    MIDTRANS_SERVER_KEY=SB-Mid-server-Z3-Zp_tYja3x2e6t4BYPq_gw
-    MIDTRANS_CLIENT_KEY=MSB-Mid-client-yTb4hQknvTM4U0qb
-    MIDTRANS_IS_PRODUCTION=false
-    MIDTRANS_IS_SANITIZED=true
-    MIDTRANS_IS_3DS=true
 
 ## (Opsional) Deployment ke Niagahoster via SSH
 
 1. Login ke server Niagahoster menggunakan SSH:
-   ```
-   ssh username@your_server_ip
-   ```
+
+    ```
+    ssh username@your_server_ip
+    ```
 
 2. Navigasi ke direktori public_html atau direktori yang ditentukan:
-   ```
-   cd public_html
-   ```
+
+    ```
+    cd public_html
+    ```
 
 3. Clone repositori (jika belum ada):
-   ```
-   git clone https://github.com/abdulaziz27/batikgumelem-web.git
-   ```
 
-   Atau pull perubahan terbaru jika sudah ada:
-   ```
-   cd batikgumelem-web
-   git pull origin main
-   ```
+    ```
+    git clone https://github.com/abdulaziz27/batikgumelem-web.git
+    ```
+
+    Atau pull perubahan terbaru jika sudah ada:
+
+    ```
+    cd batikgumelem-web
+    git pull origin main
+    ```
 
 4. Instal dependensi:
-   ```
-   composer install --no-dev
-   npm install
-   ```
+
+    ```
+    composer install --no-dev
+    npm install
+    ```
 
 5. Salin dan konfigurasi .env:
-   ```
-   cp .env.example .env
-   nano .env
-   ```
-   Sesuaikan konfigurasi database dan pengaturan lainnya.
+
+    ```
+    cp .env.example .env
+    nano .env
+    ```
+
+    Sesuaikan konfigurasi database dan pengaturan lainnya.
 
 6. Generate application key:
-   ```
-   php artisan key:generate
-   ```
+
+    ```
+    php artisan key:generate
+    ```
 
 7. Jalankan migrasi:
-   ```
-   php artisan migrate
-   ```
+
+    ```
+    php artisan migrate
+    ```
 
 8. Optimize aplikasi:
-   ```
-   php artisan optimize
-   ```
+
+    ```
+    php artisan optimize
+    ```
 
 9. Compile asset:
-   ```
-   npm run build
-   ```
+
+    ```
+    npm run build
+    ```
 
 10. Atur permission:
+
     ```
     chmod -R 755 storage bootstrap/cache
     ```
@@ -150,15 +166,15 @@ Buka `http://localhost:8000` di browser Anda untuk melihat aplikasi.
 
 ## Pemeliharaan
 
-- Untuk update aplikasi:
-  ```
-  git pull origin main
-  composer install --no-dev
-  php artisan migrate
-  npm install
-  npm run build
-  php artisan optimize
-  ```
+-   Untuk update aplikasi:
+    ```
+    git pull origin main
+    composer install --no-dev
+    php artisan migrate
+    npm install
+    npm run build
+    php artisan optimize
+    ```
 
 ## Kontribusi
 
