@@ -40,6 +40,8 @@ class ViewTransaction extends ViewRecord
                         TextEntry::make('created_at')->dateTime(),
                     ])->columns(2),
 
+                /* Transaction Items (View Only) */
+                /*
                 Section::make('Transaction Items')
                     ->schema([
                         RepeatableEntry::make('transactionItems')
@@ -58,6 +60,7 @@ class ViewTransaction extends ViewRecord
                             ])
                             ->columns(5)
                     ])
+                */
             ]);
     }
 }

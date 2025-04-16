@@ -37,7 +37,9 @@ class BlogResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\RichEditor::make('content')
-                    ->required(),
+                    ->required()
+                    ->columnSpanFull()
+                    ->extraInputAttributes(['style' => 'min-height: 300px;']),
                 Forms\Components\FileUpload::make('featured_image')
                     ->disk('public')
                     ->directory('blog-images'),

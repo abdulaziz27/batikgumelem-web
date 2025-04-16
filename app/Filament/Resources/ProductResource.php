@@ -44,7 +44,25 @@ class ProductResource extends Resource
                     ->searchable(),
                 Forms\Components\RichEditor::make('description')
                     ->required()
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->toolbarButtons([
+                        'bold',
+                        'italic',
+                        'underline',
+                        'strike',
+                        'link',
+                        'h2',
+                        'h3',
+                        'blockquote',
+                        'undo',
+                        'redo',
+                        'bulletList',
+                        'orderedList'
+                    ])
+                    ->fileAttachmentsDisk('public')
+                    ->fileAttachmentsDirectory('product-descriptions')
+                    ->maxLength(65535)
+                    ->extraInputAttributes(['style' => 'min-height: 300px;']),
 
                 // Note: We'll leave the main stock field but make it read-only as stock is now managed per size
                 Forms\Components\TextInput::make('stock')
@@ -97,7 +115,7 @@ class ProductResource extends Resource
                         return $record->galleries()
                             ->where('is_featured', true)
                             ->first()
-                            ?->url; // null safe operator
+                            ?->url;
                     }),
                 Tables\Columns\TextColumn::make('price')
                     ->money('IDR', true)
@@ -152,10 +170,15 @@ class ProductResource extends Resource
     }
 
     // Add a method to save sizes and update total stock
-    protected static function afterSave(Product $record): void
+    public static function boot()
     {
-        // Update the main product stock based on the sum of all size stocks
-        $totalStock = $record->sizes()->sum('stock');
-        $record->update(['stock' => $totalStock]);
+        parent::boot();
+
+        static::saving(function (Product $product) {
+            // Recalculate total stock before saving
+            if ($product->relationLoaded('sizes')) {
+                $product->stock = $product->sizes->sum('stock');
+            }
+        });
     }
 }

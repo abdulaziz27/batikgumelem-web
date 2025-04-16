@@ -66,7 +66,7 @@
                                 'max-height: ' + $refs.container{{ $index }}.scrollHeight + 'px' :
                                 'max-height: 0px'"
                             class="overflow-hidden transition-all duration-300 ease-in-out">
-                            <div class="px-6 pb-6 text-gray-600">
+                            <div class="px-6 pb-12 text-gray-600">
                                 {!! $faq['answer'] !!}
                             </div>
                         </div>
