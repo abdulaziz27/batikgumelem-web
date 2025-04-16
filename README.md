@@ -55,29 +55,13 @@ Selamat datang di proyek Batik Gumelem E-commerce! Proyek ini adalah platform e-
     php artisan migrate
     ```
 
-9.  Jalankan seeder jika ada:
-
-    ```
-    php artisan db:seed
-    ```
-
-    setelah running seeder bisa login dengan credential admin/user berikut:
-
-         role (user)
-         email: user@gmail.com
-         password: password
-
-         role (admin)
-         email: admin@gmail.com
-         password: password
-
-10. Compile asset:
+9.  Compile asset:
 
     ```
     npm run dev
     ```
 
-11. Jalankan server lokal:
+10. Jalankan server lokal:
     ```
     php artisan serve
     ```
